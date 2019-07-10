@@ -9,8 +9,9 @@ public class HelloController {
 
 	@RequestMapping("/")
 	@ResponseBody
+	//indica q o retorno do método deve ser serializado e devolvido no corpo da resposta
 	public String hello() {
-		return "Hello World!";
+		return "Hello World!"; //por padrão o controller espera uma página
 	}
 	
 }
