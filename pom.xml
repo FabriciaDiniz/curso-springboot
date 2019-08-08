@@ -24,6 +24,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		<!-- quando eu terminar o curso eu troco o banco de dados -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
