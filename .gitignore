@@ -33,3 +33,4 @@ build/
 mvnw
 mvnw.cmd
 __MACOSX/
+.metadata/
