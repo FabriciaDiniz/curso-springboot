@@ -1,13 +1,16 @@
 package br.com.alura.forum.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
@@ -16,6 +19,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+	
+	@Override
+	@Bean //pra poder injetar no controller
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
+	}
 	
 	// configurações de autenticação
 	@Override
@@ -29,8 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()  //autoriza todas as requisições do tipo get
 		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated() //qualquer outra requisição tem que se autenticada
-		.and().formLogin(); //gera automaticamente um formulário de login 
+		.and().csrf().disable() 
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //faz com q não crie uma sessão
 	}
 	
 	// configuração de recursos estáticos (js, css, imagens... se o front estiver integrado com a api)
