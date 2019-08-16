@@ -53,7 +53,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 			return null;
 		}
 		
-		return token.substring(7);
+		return token.substring(7); //retira o Bearer(espaço)
 	}
 
 }
